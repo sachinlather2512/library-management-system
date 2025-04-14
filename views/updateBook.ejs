@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Update Book - LMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar {
+      height: 100vh;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      width: 220px;
+      background-color: #f8f9fa;
+      padding-top: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+    .sidebar a {
+      display: block;
+      padding: 10px 20px;
+      color: #000;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background-color: #e2e6ea;
+    }
+    .content {
+      margin-left: 220px;
+      padding: 20px;
+      margin-top: 56px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-220px);
+      }
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      .content {
+        margin-left: 0;
+      }
+    }
+
+    .card {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <button class="btn btn-outline-light d-md-none" id="toggleSidebar">☰</button>
+      <a class="navbar-brand ms-3" href="#">Library Admin</a>
+      <div class="ms-auto">
+        <a href="/logout" class="btn btn-outline-light me-3">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <div class="sidebar bg-light" id="sidebar">
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/add-student"> Add Student</a>
+    <a href="/admin/students"> Show All Students</a>
+    <a href="/admin/add-book"> Add Book</a>
+    <a href="/admin/books"> Show All Books</a>
+    <a href="/admin/issue-book"> Issue Book</a>
+    <a href="/admin/borrowed-books"> Borrowed Books</a>
+    <a href="/admin/returned-books"> Returned Books</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content container">
+    <h3 class="mb-4"> Update Book Details</h3>
+    <form action="/admin/update-book/<%= book._id %>" method="post" class="row g-3">
+      <div class="col-md-6">
+        <label for="title" class="form-label">Book Title</label>
+        <input type="text" name="title" id="title" value="<%= book.title %>" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="author" class="form-label">Author</label>
+        <input type="text" name="author" id="author" value="<%= book.author %>" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="isbn" class="form-label">ISBN</label>
+        <input type="text" name="isbn" id="isbn" value="<%= book.isbn %>" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="department" class="form-label">Department</label>
+        <input type="text" name="department" id="department" value="<%= book.department %>" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" name="totalCopies" id="quantity" value="<%= book.totalCopies %>" class="form-control" min="1" required>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-success">Update Book</button>
+        <a href="/admin/books" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    document.getElementById('toggleSidebar').addEventListener('click', function () {
+      document.getElementById('sidebar').classList.toggle('show');
+    });
+  </script>
+
+</body>
+</html>

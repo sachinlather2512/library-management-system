@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Show Books - LMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar {
+      height: 100vh;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      width: 220px;
+      background-color: #f8f9fa;
+      padding-top: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+    .sidebar a {
+      display: block;
+      padding: 10px 20px;
+      color: #000;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background-color: #e2e6ea;
+    }
+    .content {
+      margin-left: 220px;
+      padding: 20px;
+      margin-top: 56px;
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-220px);
+      }
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      .content {
+        margin-left: 0;
+      }
+    }
+    .card {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .table-actions button {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <button class="btn btn-outline-light d-md-none" id="toggleSidebar">☰</button>
+      <a class="navbar-brand ms-3" href="#">Library Admin</a>
+      <div class="ms-auto">
+        <a href="/logout" class="btn btn-outline-light me-3">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <div class="sidebar bg-light" id="sidebar">
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/add-student"> Add Student</a>
+    <a href="/admin/students"> Show All Students</a>
+    <a href="/admin/add-book"> Add Book</a>
+    <a href="/admin/books"> Show All Books</a>
+    <a href="/admin/issue-book"> Issue Book</a>
+    <a href="/admin/borrowed-books"> Borrowed Books</a>
+    <a href="/admin/returned-books"> Returned Books</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content container">
+    <h3 class="mb-4"> All Books</h3>
+
+    <!-- Search Bar -->
+    <div class="mb-3">
+      <input type="text" id="searchInput" class="form-control" placeholder="Search by title, author, ISBN, or department">
+    </div>
+
+    <!-- Books Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle" id="booksTable">
+        <thead class="table-dark">
+          <tr>
+            <th>S.No.</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Department</th>
+            <th>Quantity</th>
+            <th>Available Books</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% books.forEach((book, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= book.title %></td>
+              <td><%= book.author %></td>
+              <td><%= book.isbn %></td>
+              <td><%= book.department %></td>
+              <td><%= book.totalCopies %></td>
+              <td><%= book.availableCopies %></td>
+              <td class="table-actions">
+                <a href="/admin/update-book/<%= book._id %>" class="btn btn-sm btn-warning">Update</a>
+                <form action="/admin/delete-book/<%= book._id %>" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    document.getElementById('toggleSidebar').addEventListener('click', function () {
+      document.getElementById('sidebar').classList.toggle('show');
+    });
+
+    // Search filter
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('#booksTable tbody tr');
+
+    searchInput.addEventListener('keyup', () => {
+      const searchText = searchInput.value.toLowerCase();
+
+      tableRows.forEach(row => {
+        const rowText = row.innerText.toLowerCase();
+        row.style.display = rowText.includes(searchText) ? '' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
