@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
 
   } catch (err) {
     console.error('Login error:', err.message);
-    res.render('login', { error: 'Something went wrong' });
+    res.render('home', { error: 'Something went wrong' });
   }
 });
 
