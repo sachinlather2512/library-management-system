@@ -84,18 +84,64 @@
     <a href="/admin/add-book">Add Book</a>
     <a href="/admin/books">Show All Books</a>
     <a href="/admin/issue-book">Issue Book</a>
-    <a href="/admin/borrowed-books">Borrowed Books</a>
+    <a href="/admin/borrowed-books">Issued Books</a>
     <a href="/admin/returned-books">Returned Books</a>
   </div>
 
-  <!-- Content -->
   <div class="content">
     <h2 class="mb-4">Welcome to the Library Management System Admin Dashboard</h2>
     <p class="lead">
-      Use the sidebar to manage students, books, and issued/returned records. This dashboard gives you full control over
-      the library's data.
+      Use the sidebar to manage students, books, and issued/returned records.
     </p>
+  
+    <div class="container mt-4">
+      <div class="row g-4">
+    
+        <!-- Total Students -->
+        <div class="col-md-3">
+          <div class="card text-white bg-primary">
+            <div class="card-body">
+              <h5 class="card-title">Total Students</h5>
+              <p class="card-text display-6"><%= totalStudents %></p>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Total Book Titles -->
+        <div class="col-md-3">
+          <div class="card text-white bg-success">
+            <div class="card-body">
+              <h5 class="card-title">Total Book Titles</h5>
+              <p class="card-text display-6"><%= totalBooks %></p>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Total Book Quantity -->
+        <div class="col-md-3">
+          <div class="card text-white bg-info">
+            <div class="card-body">
+              <h5 class="card-title">Total Book Quantity</h5>
+              <p class="card-text display-6"><%= totalBookQuantity %></p>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Total Issued Books -->
+        <div class="col-md-3">
+          <div class="card text-white bg-danger">
+            <div class="card-body">
+              <h5 class="card-title">Currently Issued Books</h5>
+              <p class="card-text display-6"><%= totalIssuedBooks %></p>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+    
   </div>
+  
 
   <!-- Scripts -->
   <script>

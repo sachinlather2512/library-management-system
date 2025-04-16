@@ -76,14 +76,14 @@
 
   <!-- Sidebar -->
   <div class="sidebar bg-light" id="sidebar">
-    <a href="/student/dashboard">Dashboard</a>
+    <a href="/student/dashboard" class="bg-dark text-white">Dashboard</a>
     <a href="/student/available-books">Available Books</a>
-    <a href="/student/my-books">My Borrowed Books</a>
+    <a href="/student/my-books">Your Issued Books</a>
   </div>
 
   <!-- Content -->
   <div class="content container">
-    <h3 class="mb-4">My Borrowed Books</h3>
+    <h3 class="mb-4">Issued books to you</h3>
 
     <div class="table-responsive">
       <table class="table table-bordered table-striped align-middle">
@@ -101,7 +101,7 @@
         <tbody>
           <% if (records.length === 0) { %>
             <tr>
-              <td colspan="7" class="text-center">You have no borrowed books.</td>
+              <td colspan="7" class="text-center">You have no issued books.</td>
             </tr>
           <% } else { %>
             <% records.forEach(record => { %>

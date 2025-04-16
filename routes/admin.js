@@ -19,9 +19,44 @@ const adminAuth = require('../middleware/adminAuth');
 //   }
 // });
 
+// router.get('/dashboard', async (req, res) => {
+//   res.render('adminDashboard');
+// })
+
 router.get('/dashboard', async (req, res) => {
-  res.render('adminDashboard');
-})
+  try {
+    const totalStudents = await User.countDocuments();
+    const totalBooks = await Book.countDocuments();
+    
+    // Sum of all totalCopies (actual quantity of all books)
+    const totalBookQuantityResult = await Book.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$totalCopies" }
+        }
+      }
+    ]);
+    const totalBookQuantity = totalBookQuantityResult[0]?.total || 0;
+
+    // Count only currently issued books (not yet returned)
+    const totalIssuedBooks = await IssueRecord.countDocuments({ returnDate: null });
+
+    res.render('adminDashboard', {
+      totalStudents,
+      totalBooks,
+      totalBookQuantity,   // total number of books including quantity
+      totalIssuedBooks
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+
+
 
 
 // get - add student
@@ -29,7 +64,7 @@ router.get('/add-student', (req, res) => {
   res.render('addStudent');
 })
 
-// pots - add student
+// post - add student
 router.post('/add-student', async (req, res) => {
   try {
     const { name, email, password, rollNo, fatherName, class: studentClass } = req.body;
@@ -52,7 +87,7 @@ router.post('/add-student', async (req, res) => {
       class: studentClass
     });
     
-    res.redirect('/admin/add-student');
+    res.redirect('/admin/students');
   } catch (err) {
     console.error('Add student error:', err.message);
     res.send('Error adding student');
@@ -152,7 +187,7 @@ router.post('/add-book', async (req, res) => {
       totalCopies,
       availableCopies: totalCopies
     });
-    res.redirect('/admin/add-book');
+    res.redirect('/admin/books');
   } catch (err) {
     console.error('Add book error:', err.message);
     res.send('Error adding book');

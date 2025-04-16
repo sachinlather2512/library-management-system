@@ -33,7 +33,7 @@ router.post('/register-admin', async (req, res) => {
     });
 
     await admin.save();
-    res.redirect('/login');
+    res.redirect('/adminlogin');
   } catch (err) {
     console.error('Admin registration error:', err.message);
     res.render('registerAdmin', { error: 'Something went wrong' });

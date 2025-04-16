@@ -33,30 +33,13 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// additional admin register
-// app.post('/register-admin', async (req, res) => {
-//     try {
-//       const { name, email, password } = req.body;
-//       const existing = await User.findOne({ email });
-//       if (existing) return res.send('Admin already registered');
-  
-//       const hashedPassword = await bcrypt.hash(password, 10);
-//       const newAdmin = new User({ name, email, password: hashedPassword });
-//       await newAdmin.save();
-//       res.send('Admin registered successfully. You can now log in.');
-//     } catch (err) {
-//       console.error('Error registering admin:', err);
-//       res.status(500).send('Error registering admin');
-//     }
-//   });
-
 // Routes
 app.get('/', (req, res) => res.render('home'));
 app.use('/', require('./routes/auth'));
 app.use('/admin', adminAuth, require('./routes/admin'));
 app.use('/student', studentAuth, require('./routes/student'));
 
-// app.use('/', require('./routes/adminRegister'));
+app.use('/', require('./routes/adminRegister'));
 
 
 
