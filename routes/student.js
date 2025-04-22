@@ -3,10 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models/Book');
 const IssueRecord = require('../models/IssueRecord');
-// const { protect } = require('../middleware/auth');
 
-// Middleware: Only Students
-// router.use(protect(['student']));
 
 // Student Dashboard
 router.get('/dashboard', async (req, res) => {

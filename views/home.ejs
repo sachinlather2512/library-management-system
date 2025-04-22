@@ -38,17 +38,17 @@
 
     .hero {
       min-height: 85vh;
-      background: url('https://images.unsplash.com/photo-1600172454520-1b94460a1d52') center/cover no-repeat;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/images/home-library.jpg') center/cover no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 2rem;
       color: white;
-      background-blend-mode: darken;
-      background-color: rgba(0, 0, 0, 0.6);
       animation: fadeIn 1.5s ease-in;
     }
+
 
     .hero h1 {
       font-size: 3rem;
@@ -75,6 +75,7 @@
         opacity: 0;
         transform: translateY(-30px);
       }
+
       100% {
         opacity: 1;
         transform: translateY(0);
@@ -86,6 +87,7 @@
         opacity: 0;
         transform: translateY(30px);
       }
+
       100% {
         opacity: 1;
         transform: translateY(0);
@@ -96,6 +98,7 @@
       from {
         opacity: 0;
       }
+
       to {
         opacity: 1;
       }

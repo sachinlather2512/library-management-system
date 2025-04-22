@@ -7,22 +7,6 @@ const User = require('../models/User');
 const IssueRecord = require('../models/IssueRecord');
 const adminAuth = require('../middleware/adminAuth');
 
-// Dashboard
-// router.get('/dashboard', async (req, res) => {
-//   try {
-//     const books = await Book.find();
-//     const students = await User.find({ role: 'student' });
-//     res.render('adminDashboard', { admin: req.user, books, students });
-//   } catch (err) {
-//     console.error('Dashboard error:', err.message);
-//     res.send('Error loading dashboard');
-//   }
-// });
-
-// router.get('/dashboard', async (req, res) => {
-//   res.render('adminDashboard');
-// })
-
 router.get('/dashboard', async (req, res) => {
   try {
     const totalStudents = await User.countDocuments();
@@ -54,9 +38,6 @@ router.get('/dashboard', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-
-
-
 
 
 // get - add student
